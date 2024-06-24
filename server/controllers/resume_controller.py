@@ -71,3 +71,25 @@ class ResumeResource(Resource):
             }), 201)
         except Exception as e:
             return make_response(jsonify({"error": str(e)}), 500)
+        
+
+    @jwt_required()
+    def get(self):
+        user_identity = get_jwt_identity()
+        user = User.query.filter_by(username=user_identity).first()
+
+        if not user:
+            return jsonify({"message": "User not found"}), 404
+        
+        resumes = Resume.query.all()
+        resume_schema = ResumeSchema(many=True)
+        response = resume_schema.dump(resumes)
+        
+
+
+        return make_response(jsonify({
+            "resumes": response
+        }), 200)
+
+
+
