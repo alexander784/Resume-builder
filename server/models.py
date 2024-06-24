@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from werkzeug.security import check_password_hash,generate_password_hash
 
 
 
@@ -16,6 +17,13 @@ class User(db.Model):
     resume = db.relationship('Resume', backref='user_resumes', lazy=True)
 
     # resumes = db.relationship('Resumes', backref='user_resumes', lazy=True)
+
+    def verify_password(self,password):
+        return check_password_hash(self._password_hash, password)
+    def set_password(self,password):
+        self.password = generate_password_hash(password)
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
 
 

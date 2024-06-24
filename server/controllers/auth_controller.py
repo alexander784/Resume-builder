@@ -60,7 +60,7 @@ class Signup(Resource):
 
 @auth_ns.route('/login')
 class Login(Resource):
-    @auth_ns.expect(login_model)``
+    @auth_ns.expect(login_model)
     def post(self):
         try:
             data = request.json
