@@ -1,11 +1,11 @@
-
 from marshmallow import fields
-from config import ma
 from models import User,Resume
+from config import ma
 
 
 
-class UserSchema(ma.schema):
+
+class UserSchema(ma.Schema):
     class Meta:
         model = User
     id = fields.Int(dump_only=True)
@@ -31,6 +31,11 @@ class ResumeSchema(ma.Schema):
     projects = fields.Str(required=True)
     languages = fields.Str(required=True)
     created_at = fields.DateTime(dump_only=True)
+
+
+Resume_schema = ResumeSchema()
+Resume_schema = ResumeSchema(many=True)
+
 
 
 

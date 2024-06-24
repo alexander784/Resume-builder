@@ -12,9 +12,13 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(20), nullable=False)
 
+    resumes = db.relationship('Resume', backref='user', lazy=True)
+
+
 
 class Resume(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(120), nullable=False)
     profile = db.Column(db.Text, nullable=False)
     experience = db.Column(db.Text, nullable=False)

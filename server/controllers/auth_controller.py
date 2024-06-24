@@ -3,6 +3,7 @@ from flask_restx import Namespace, fields,Resource
 from flask import request, jsonify, make_response
 from werkzeug.security import generate_password_hash
 from models import db, User
+from marshmallow_schema import user_schema
 
 
 
@@ -49,7 +50,7 @@ class Signup(Resource):
                 db.session.add(new_user)
                 db.session.commit()
 
-                return make_response(jsonify((new_user)), 201)
+                return make_response(jsonify(user_schema.dump(new_user)), 201)
             
             return make_response(jsonify({"error": "Passwords must match"}))
         except ValueError as e:
