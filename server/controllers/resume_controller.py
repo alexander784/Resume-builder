@@ -73,6 +73,8 @@ class ResumeResource(Resource):
             return make_response(jsonify({"error": str(e)}), 500)
         
 
+
+##Retrive all resumes
     @jwt_required()
     def get(self):
         user_identity = get_jwt_identity()
@@ -90,6 +92,34 @@ class ResumeResource(Resource):
         return make_response(jsonify({
             "resumes": response
         }), 200)
+    
+# Delete a resume
+@resume_ns.route('/resume/<int:id>')
+class ResumeDetailResource(Resource):
+    @jwt_required()
+    def delete(self, id):
+        try:
+            user_identity = get_jwt_identity()
+            user = User.query.filter_by(username=user_identity).first()
+
+            if not user:
+                return make_response(jsonify({"message":"User not found"})), 404
+            
+            resume = Resume.query.filter_by(id=id, user_id=user.id).first()
+
+            if not resume:
+                return make_response(jsonify({"message":"Resume not found or authorised "})), 494
+            
+
+            db.session.delete(resume)
+            db.session.commit()
+
+            make_response(jsonify({"message":"Resume deleted susccessfully"}), 200)
+
+        except Exception as e:
+            return make_response(jsonify({"error":str(e)}), 500)
+        
+
 
 
 
