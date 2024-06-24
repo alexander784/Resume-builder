@@ -47,6 +47,8 @@ class Signup(Resource):
                     email=data.get('email'),
                     _password_hash=generate_password_hash(password)
                 )
+
+
                 db.session.add(new_user)
                 db.session.commit()
 
@@ -55,6 +57,39 @@ class Signup(Resource):
             return make_response(jsonify({"error": "Passwords must match"}))
         except ValueError as e:
             return make_response(jsonify({"error": str(e)}))
+
+@auth_ns.route('/login')
+class Login(Resource):
+    @auth_ns.expect(login_model)``
+    def post(self):
+        try:
+            data = request.json
+
+            username = data.get('username')
+            password = data.get('password')
+
+
+            db_user = User.query.filter_by(username=username).first()
+
+            if db_user and db_user.verify_password(password):
+                access_token = create_access_token(identity=db_user.username)
+                refresh_token = create_refresh_token(identity=db_user.username)
+
+                return make_response(jsonify({"message":"Login successful", "tokens": {
+                    "access":access_token,
+                    "refresh": refresh_token
+                },
+                    "user":user_schema.dump(db_user)}), 200)
+            return make_response(jsonify({"error":"Invalid username or password"}), 401)
+        except ValueError as e:
+            return make_response(jsonify({"error":str(e)}), 500)
+        
+        
+        
+                
+
+
+
 
 
 
