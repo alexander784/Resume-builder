@@ -1,7 +1,7 @@
 
 from marshmallow import fields
 from config import ma
-from models import User
+from models import User,Resume
 
 
 
@@ -15,6 +15,24 @@ class UserSchema(ma.schema):
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
+
+
+class ResumeSchema(ma.Schema):
+    class Meta:
+        model = Resume
+
+    id = fields.Integer(dump_only=True)
+    name = fields.Str(required=True)
+    profile = fields.Str(required=True)
+    experience = fields.Str(required=True)
+    education = fields.Str(required=True)
+    skills = fields.Str(required=True)
+    certificates = fields.Str(required=True)
+    projects = fields.Str(required=True)
+    languages = fields.Str(required=True)
+    created_at = fields.DateTime(dump_only=True)
+
+
 
 
     
