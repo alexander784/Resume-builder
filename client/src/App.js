@@ -9,11 +9,11 @@ function App() {
     <>
     <Router>
        <Navbar />
-       {/* <Hero /> */}
-       <Resume />
-       {/* <Routes>
+       <Hero />
+       {/* <Resume /> */}
+       <Routes>
         <Route path="/Resume" element={ <Resume />}/>
-       </Routes> */}
+       </Routes>
     </Router>
     </>
   );
