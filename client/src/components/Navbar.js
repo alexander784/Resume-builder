@@ -10,7 +10,9 @@ const Navbar = () => {
           <span className="text-white text-xl font-bold">Ralphy</span>
         </div>
         <div>
-          
+          <Link to="/login" className="text-white text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-gray-800 transition duration-300">
+            Login
+          </Link>
         </div>
       </div>
     </nav>
