@@ -5,7 +5,7 @@ from os import environ
 from flask_marshmallow import Marshmallow
 from models import db
 from flask_jwt_extended import JWTManager
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 jwt = JWTManager(app)
@@ -21,5 +21,8 @@ app.config['SQLALCHEMY_ECHO'] = environ.get("SQLALCHEMY_ECHO")
 db.init_app(app)
 ma = Marshmallow(app)
 migrate = Migrate(app,db)
+
+
+CORS(app)
 
 
