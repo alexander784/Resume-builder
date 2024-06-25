@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+
   return (
     <section className="hero min-h-screen bg-gray-800 text-white flex items-center">
       <div className="container mx-auto">
