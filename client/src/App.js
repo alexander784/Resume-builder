@@ -3,16 +3,19 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Resume from './Pages/Resume';
+import Signup from './components/Signup';
 
 function App() {
   return (
     <>
     <Router>
        <Navbar />
-       <Hero />
+       {/* <Hero /> */}
        {/* <Resume /> */}
        <Routes>
+        <Route path='/' element={<Hero />}/>
         <Route path="/Resume" element={ <Resume />}/>
+        <Route path='/Signup' element={ <Signup />}/>
        </Routes>
     </Router>
     </>
