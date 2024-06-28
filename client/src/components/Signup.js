@@ -25,12 +25,14 @@ const Signup = () => {
         },
         body: JSON.stringify(values),
       })
+      // Get response
         .then((response) => {
           if (response.ok) {
             resetForm();
             return response.json();
           }
         })
+        // retrieve the data
         .then((data) => {
           console.log(data);
           if (data.error) {
@@ -40,6 +42,7 @@ const Signup = () => {
             navigate("/login");
           }
         })
+        // Catch the error
         .catch((err) => {
           console.log("Error in registering user", err);
         });
