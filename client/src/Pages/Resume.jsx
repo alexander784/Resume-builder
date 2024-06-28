@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import ResumeDetails from './ResumeDetails'; // Import ResumeDetails component
 
 const Resume = () => {
   const navigate = useNavigate();
+  const [resumeData, setResumeData] = useState(null);
 
   // Check for the authentication token
   useEffect(() => {
@@ -45,6 +47,7 @@ const Resume = () => {
         
         const data = await response.json();
         console.log('Form submitted successfully:', data);
+        setResumeData(data); // Update the state with the submitted data
       } catch (error) {
         console.error('Error submitting form:', error);
       }
@@ -80,6 +83,7 @@ const Resume = () => {
           languages: data.languages,
           createdAt: data.createdAt,
         });
+        setResumeData(data); // Update the state with the fetched data
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -205,6 +209,8 @@ const Resume = () => {
           </button>
         </div>
       </form>
+      
+      
     </div>
   );
 };
