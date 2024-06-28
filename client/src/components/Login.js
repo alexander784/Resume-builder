@@ -53,6 +53,19 @@ const Login = () => {
         <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
         {error && <div className='mb-4 text-red-500'>{error}</div>}
         <form onSubmit={formik.handleSubmit} className='space-y-4'>
+
+        <div>
+            <label htmlFor='username' className='block text-gray-700'>Username</label>
+            <input
+              type='username'
+              id='username'
+              name='username'
+              onChange={formik.handleChange}
+              value={formik.values.username}
+              className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+              required
+            />
+          </div>
           <div>
             <label htmlFor='email' className='block text-gray-700'>Email</label>
             <input
