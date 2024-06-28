@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import Resume from './Pages/Resume';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import ResumeDetails from './Pages/ResumeDetails';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/Resume" element={ <Resume />}/>
         <Route path='/Signup' element={ <Signup />}/>
         <Route path='/Login' element={ <Login />}/>
+        <Route path='/ResumeDetails' element={ <ResumeDetails /> }/>
        </Routes>
     </Router>
     </>

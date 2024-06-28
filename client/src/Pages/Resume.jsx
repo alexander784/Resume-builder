@@ -210,7 +210,8 @@ const Resume = () => {
         </div>
       </form>
       
-      
+      {/* Render ResumeDetails component with resumeData */}
+      {/* <ResumeDetails resume={Resume} /> */}
     </div>
   );
 };

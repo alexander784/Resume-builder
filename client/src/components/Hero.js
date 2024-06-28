@@ -19,6 +19,7 @@ const Hero = () => {
             className="bg-white text-gray-800 px-6 py-3 mt-4 rounded-lg shadow-lg hover:bg-gray-200 hover:text-gray-900 transition duration-300">
             Get Started
           </button>
+          
         </div>
       </div>
     </section>
