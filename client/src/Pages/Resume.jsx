@@ -1,7 +1,18 @@
 import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
 const Resume = () => {
+  const navigate = useNavigate();
+
+  // Check for the authentication token
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -15,11 +26,15 @@ const Resume = () => {
       createdAt: '',
     },
     onSubmit: async (values) => {
+      // Retrieve access token
+      const token = localStorage.getItem('access_token');
+
       try {
         const response = await fetch('http://localhost:5000/resume/resume', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify(values),
         });
@@ -38,8 +53,14 @@ const Resume = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem('access_token');
+
       try {
-        const response = await fetch('http://localhost:5000/resume');
+        const response = await fetch('http://127.0.0.1:5000/resume/resume', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
         
         if (!response.ok) {
           throw new Error('Network response was not ok');
