@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ( { setUsername }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -36,7 +36,9 @@ const Login = () => {
           localStorage.setItem('access_token', data.tokens.access);
           localStorage.setItem('refresh_token', data.tokens.refresh);
 
-          console.log(data.user);
+          setUsername(data.user.username);
+
+          // console.log(data.user);
           navigate('/');
         }
       })

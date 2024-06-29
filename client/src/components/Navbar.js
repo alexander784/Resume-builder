@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ( { username }) => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
@@ -21,11 +21,23 @@ const Navbar = () => {
           </span>
         </div>
         <div>
-          <Link to="/login" className="text-white text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-gray-800 transition duration-300">
+          {username ? (
+            <div>
+              <span className="text-white text-sm px-4 py-2">
+                {username}
+              </span>
+            </div>
+          ) :  (
+            <div>
+            <Link to="/login" className="text-white text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-gray-800 transition duration-300">
             Login
           </Link>
         </div>
-        
+          )}
+        <div>
+          
+        </div>
+      </div>
       </div>
     </nav>
   );
