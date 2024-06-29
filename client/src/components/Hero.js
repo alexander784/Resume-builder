@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import resume from "../assets/resume.png";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -8,9 +9,9 @@ const Hero = () => {
     navigate('/resume');
   };
 
-  const handleView = () => {
-    navigate('/ResumeDetails');
-  };
+  // const handleView = () => {
+  //   navigate('/ResumeDetails');
+  // };
 
   return (
     <section className="hero min-h-screen bg-gray-800 text-white flex items-center">
@@ -18,16 +19,17 @@ const Hero = () => {
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">Welcome to Ralphy Resume</h1>
           <p className="text-lg mt-4">Build your classic Resume in seconds.</p>
-          <button 
-            onClick={handleGetStarted} 
-            className="bg-white text-gray-800 px-6 py-3 mt-4 rounded-lg shadow-lg hover:bg-gray-200 hover:text-gray-900 transition duration-300">
-            Get Started
-          </button>
-          <button 
+          <img 
+          src={resume}
+          alt="Resume"
+          onClick={handleGetStarted}
+          className="cursor-pointer mx-auto mt-4 w-32 h-32 object-cover rounded-lg"/>
+         
+          {/* <button 
             onClick={handleView} 
             className="bg-white text-gray-800 px-6 py-3 mt-4 rounded-lg shadow-lg hover:bg-gray-200 hover:text-gray-900 transition duration-300">
             View
-          </button>
+          </button> */}
         </div>
       </div>
     </section>
