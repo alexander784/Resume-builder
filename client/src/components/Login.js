@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -96,6 +96,13 @@ const Login = () => {
           >
             Login
           </button>
+          <div>
+          <p>Don't have an Account? <br/>
+          <Link to="/Signup" className="bg-blue-600 text-white text-center text-sm w-full px-4 py-2 border border-blue-500 rounded transition duration-300">
+            Create one
+          </Link>
+          </p>
+        </div>
         </form>
       </div>
     </div>
