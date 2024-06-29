@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ( { username }) => {
+const Navbar = ( { username,setUsername,handleLogout }) => {
   const navigate = useNavigate();
+  const[showDropdown, setShowDropdown] = useState(false);
 
   const handleHomeClick = () => {
     navigate('/');
+  };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+
+    
+
   };
 
   return (
@@ -19,13 +27,31 @@ const Navbar = ( { username }) => {
           >
             Ralphy
           </span>
-        </div>
+        </div> 
         <div>
           {username ? (
-            <div>
-              <span className="text-white text-sm px-4 py-2">
-                {username}
-              </span>
+            <div className="relative">
+               <button
+              onClick={toggleDropdown}
+              className="text-white text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-gray-800 transition duration-300 focus:outline-none"
+            >
+                {username} ▼
+            </button>
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg">
+                <Link to="/profile"
+                 className="block px-4 py-2 text-gray-800">
+                  View profile
+                 </Link>
+                 <button onClick={handleLogout}
+                 className="block w-full px4 py-2 text-left text-gray-800">
+                  Logout
+                 </button>
+              </div>
+            )}
+
+              {/* <span className="text-white text-sm px-4 py-2">
+              </span> */}
             </div>
           ) :  (
             <div>
