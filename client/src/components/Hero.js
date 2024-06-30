@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import resume from "../assets/resume.png";
+import Template from '../templates/Template';
 
 const Hero = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate('/resume');
+    navigate('/template');
   };
 
   // const handleView = () => {

@@ -8,6 +8,7 @@ import Login from './components/Login';
 import ResumeDetails from './Pages/ResumeDetails';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import Template from './templates/Template';
 
 function App() {
 
@@ -27,13 +28,16 @@ function App() {
        <Navbar username={username} onLogout={handleLogout}/>
        {/* <Hero /> */}
        {/* <Resume /> */}
+       {/* <Template /> */}
+       
        <Routes>
         <Route path='/' element={<Hero />}/>
         <Route path="/Resume" element={ <Resume />}/>
         <Route path='/Signup' element={ <Signup />}/>
         <Route path='/Login' element={ <Login setUsername={setUsername} />} />
         <Route path='/ResumeDetails' element={ <ResumeDetails /> }/>
-       </Routes>
+        <Route path='/Template' element={ <Template />}/>
+       </Routes >
     </Router>
     </>
   );
