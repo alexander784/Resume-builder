@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const Template = () => {
@@ -24,7 +24,10 @@ const Template = () => {
     certificates: 'List your certificates here.',
     projects: 'List your projects here.',
     languages: 'List the languages you speak here.',
+    profileImage: '',
   });
+
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     // Fetch existing resume data from the backend
@@ -57,8 +60,21 @@ const Template = () => {
     setResumeData((prevData) => ({ ...prevData, education: newEducation }));
   };
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setResumeData((prevData) => ({ ...prevData, profileImage: reader.result }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
-    axios.post('/resume', resumeData, {
+    axios.post('http://127.0.0.1:5000/resume/resume', resumeData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -90,11 +106,20 @@ const Template = () => {
             {resumeData.profile}
           </p>
         </div>
-        <img
-          src=""
-          alt="Profile"
-          className="w-32 h-32 object-cover rounded-full shadow-lg"
-        />
+        <div>
+          <img
+            src={resumeData.profileImage || 'default-image-url'}
+            alt="Profile"
+            className="w-32 h-32 object-cover rounded-full shadow-lg cursor-pointer"
+            onClick={() => fileInputRef.current.click()}
+          />
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleImageChange}
+          />
+        </div>
       </div>
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-2">Experience</h2>
