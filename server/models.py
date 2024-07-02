@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import json
 from werkzeug.security import check_password_hash,generate_password_hash
 
 
@@ -41,4 +42,21 @@ class Resume(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User',backref='user_resume')
+
+    @property
+    def experience_list(self):
+        return json.loads(self.experience)
+    
+    @experience_list.setter
+    def experience_list(self,value):
+        self.experience = json.dumps(value)
+
+    @property
+    def education_list(self):
+        return json.loads(self.education)
+    
+    @education_list.setter
+    def education_list(self, value):
+        self.education = json.dumps(value)
+
 
