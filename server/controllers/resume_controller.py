@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow_schema import ResumeSchema
 from models import db
 from datetime import datetime
+import json
 
 resume_ns = Namespace("resume", description="A Namespace for resume operations")
 
@@ -32,8 +33,8 @@ class ResumeResource(Resource):
             data = request.get_json()
             name = data.get("name")
             profile = data.get("profile")
-            experience = data.get("experience")
-            education = data.get("education")
+            experience = json.dumps(data.get("experience"))
+            education = json.dumps(data.get("education"))
             skills = data.get("skills")
             certificates = data.get("certificates")
             projects = data.get("projects")
@@ -81,6 +82,11 @@ class ResumeResource(Resource):
             return jsonify({"message": "User not found"}), 404
         
         resumes = Resume.query.all()
+
+        for resume in resumes:
+            resume.experience = json.loads(resume.experience)
+            resume.education = json.loads(resume.education)
+            
         resume_schema = ResumeSchema(many=True)
         response = resume_schema.dump(resumes)
 
