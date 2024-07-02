@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Login = ( { setUsername }) => {
+const Login = ({ setUsername }) => {
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
+  const navigate = useNavigate(); 
   const formik = useFormik({
     initialValues: {
+      username: '',
       email: '',
       password: '',
     },
@@ -22,30 +22,26 @@ const Login = ( { setUsername }) => {
         },
         body: JSON.stringify(values),
       })
-      .then((response) => {
-        if (response.ok) {
-          resetForm();
-          return response.json();
-        } else {
-          throw new Error('Login failed');
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        if (data) {
-          localStorage.setItem('access_token', data.tokens.access);
-          localStorage.setItem('refresh_token', data.tokens.refresh);
-
-          setUsername(data.user.username);
-
-          // console.log(data.user);
-          navigate('/');
-        }
-      })
-      .catch((err) => {
-        console.log('Error in logging in user', err);
-        setError('Login failed. Please check your credentials and try again.');
-      });
+        .then((response) => {
+          if (response.ok) {
+            resetForm();
+            return response.json();
+          } else {
+            throw new Error('Login failed');
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          if (data) {
+            localStorage.setItem('token', data.tokens.access); 
+            setUsername(data.user.username);
+            navigate('/template'); 
+          }
+        })
+        .catch((err) => {
+          console.log('Error in logging in user', err);
+          setError('Login failed. Please check your credentials and try again.');
+        });
     },
   });
 
@@ -55,11 +51,10 @@ const Login = ( { setUsername }) => {
         <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
         {error && <div className='mb-4 text-red-500'>{error}</div>}
         <form onSubmit={formik.handleSubmit} className='space-y-4'>
-
-        <div>
+          <div>
             <label htmlFor='username' className='block text-gray-700'>Username</label>
             <input
-              type='username'
+              type='text'
               id='username'
               name='username'
               onChange={formik.handleChange}
@@ -99,34 +94,16 @@ const Login = ( { setUsername }) => {
             Login
           </button>
           <div>
-          <p>Don't have an Account? <br/>
-          <Link to="/Signup" className="bg-blue-600 text-white text-center text-sm w-full px-4 py-2 border border-blue-500 rounded transition duration-300">
-            Create one
-          </Link>
-          </p>
-        </div>
+            <p>Don't have an Account? <br />
+              <Link to="/Signup" className="bg-blue-600 text-white text-center text-sm w-full px-4 py-2 border border-blue-500 rounded transition duration-300">
+                Create one
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </div>
   );
-};
-
-const fetchData = async () => {
-  const token = localStorage.getItem('access_token');
-  const response = await fetch('http://127.0.0.1:5000/auth/login', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  console.log(data);
 };
 
 export default Login;

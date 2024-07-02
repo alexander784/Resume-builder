@@ -36,7 +36,8 @@ function App() {
         <Route path='/Signup' element={ <Signup />}/>
         <Route path='/Login' element={ <Login setUsername={setUsername} />} />
         <Route path='/ResumeDetails' element={ <ResumeDetails /> }/>
-        <Route path='/Template' element={ <Template />}/>
+        <Route path='/template' element={localStorage.getItem('access_token') ? <Template /> : <Navigate to='/login' />} />
+        {/* <Route path='/Template' element={ <Template />}/> */}
        </Routes >
     </Router>
     </>

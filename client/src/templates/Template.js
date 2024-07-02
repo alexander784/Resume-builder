@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom'; // Import Navigate from react-router-dom
 
 const Template = () => {
   const [resumeData, setResumeData] = useState({
@@ -24,22 +25,25 @@ const Template = () => {
     certificates: 'List your certificates here.',
     projects: 'List your projects here.',
     languages: 'List the languages you speak here.',
-    profileImage: '',
+    // profileImage: '',
   });
 
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    // Fetch existing resume data from the backend
-    axios.get('http://127.0.0.1:5000/resume/resume', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }).then(response => {
-      setResumeData(response.data);
-    }).catch(error => {
-      console.error('Error fetching resume data:', error);
-    });
+    const token = localStorage.getItem('token');
+    // console.log('Token:', token);
+    if (token) {
+      axios.get('http://127.0.0.1:5000/resume/resume', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }).then(response => {
+        setResumeData(response.data);
+      }).catch(error => {
+        console.error('Error fetching resume data:', error);
+      });
+    }
   }, []);
 
   const handleChange = (field, value) => {
@@ -74,16 +78,30 @@ const Template = () => {
   };
 
   const handleSave = () => {
-    axios.post('http://127.0.0.1:5000/resume/resume', resumeData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }).then((response) => {
-      console.log(response.data);
-    }).catch((error) => {
-      console.error('Error saving resume:', error);
-    });
+    const token = localStorage.getItem('token');
+    console.log('Saving resume data:', resumeData);
+    if (token) {
+      axios.post('http://127.0.0.1:5000/resume/resume', resumeData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        console.log('Resume saved successfully:', response.data);
+      }).catch((error) => {
+        console.error('Error saving resume:', error);
+      });
+    } else {
+      console.error('No token found in localStorage');
+      // You can redirect to the login page or handle the error as per your application flow
+      // Example of redirect using Navigate from react-router-dom
+      // return <Navigate to="/login" />;
+    }
   };
+
+  if (!localStorage.getItem('token')) {
+    // Redirect to login or display an error message
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="text-center max-w-4xl mx-auto p-4 bg-white shadow-lg justify-center">
@@ -108,7 +126,7 @@ const Template = () => {
         </div>
         <div>
           <img
-            src={resumeData.profileImage || 'default-image-url'}
+            src={resumeData.profileImage || ''}
             alt="Profile"
             className="w-32 h-32 object-cover rounded-full shadow-lg cursor-pointer"
             onClick={() => fileInputRef.current.click()}
