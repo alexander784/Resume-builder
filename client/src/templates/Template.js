@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom'; // Import Navigate from react-router-dom
+import { useNavigate } from 'react-router-dom';
 
 const Template = () => {
   const [resumeData, setResumeData] = useState({
@@ -25,43 +25,57 @@ const Template = () => {
     certificates: 'List your certificates here.',
     projects: 'List your projects here.',
     languages: 'List the languages you speak here.',
-    // profileImage: '',
+    profileImage: '',
   });
 
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    // console.log('Token:', token);
-    if (token) {
-      axios.get('http://127.0.0.1:5000/resume/resume', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      }).then(response => {
-        setResumeData(response.data);
-      }).catch(error => {
+    const fetchResumeData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const response = await axios.get('http://127.0.0.1:5000/resume/resume', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const resume = response.data.resumes[0];
+          if (resume) {
+            setResumeData({
+              ...resume,
+              experience: JSON.parse(resume.experience),
+              education: JSON.parse(resume.education),
+            });
+          } else {
+            console.error('No resume found.');
+          }
+        }
+      } catch (error) {
         console.error('Error fetching resume data:', error);
-      });
-    }
+      }
+    };
+
+    fetchResumeData();
   }, []);
 
   const handleChange = (field, value) => {
-    setResumeData((prevData) => ({ ...prevData, [field]: value }));
+    setResumeData(prevData => ({ ...prevData, [field]: value }));
   };
 
   const handleExperienceChange = (index, field, value) => {
     const newExperience = resumeData.experience.map((exp, i) =>
       i === index ? { ...exp, [field]: value } : exp
     );
-    setResumeData((prevData) => ({ ...prevData, experience: newExperience }));
+    setResumeData(prevData => ({ ...prevData, experience: newExperience }));
   };
 
   const handleEducationChange = (index, field, value) => {
     const newEducation = resumeData.education.map((edu, i) =>
       i === index ? { ...edu, [field]: value } : edu
     );
-    setResumeData((prevData) => ({ ...prevData, education: newEducation }));
+    setResumeData(prevData => ({ ...prevData, education: newEducation }));
   };
 
   const handleImageChange = (event) => {
@@ -69,7 +83,7 @@ const Template = () => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setResumeData((prevData) => ({ ...prevData, profileImage: reader.result }));
+      setResumeData(prevData => ({ ...prevData, profileImage: reader.result }));
     };
 
     if (file) {
@@ -77,30 +91,42 @@ const Template = () => {
     }
   };
 
-  const handleSave = () => {
+  const handleView = () => {
     const token = localStorage.getItem('token');
-    console.log('Saving resume data:', resumeData);
     if (token) {
-      axios.post('http://127.0.0.1:5000/resume/resume', resumeData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        console.log('Resume saved successfully:', response.data);
-      }).catch((error) => {
-        console.error('Error saving resume:', error);
-      });
+      navigate('/viewresume');
     } else {
-      console.error('No token found in localStorage');
-      // You can redirect to the login page or handle the error as per your application flow
-      // Example of redirect using Navigate from react-router-dom
-      // return <Navigate to="/login" />;
+      navigate('/login');
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const dataToSave = {
+          ...resumeData,
+          experience: JSON.stringify(resumeData.experience),
+          education: JSON.stringify(resumeData.education),
+        };
+        const response = await axios.post('http://127.0.0.1:5000/resume/resume', dataToSave, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log('Resume saved successfully:', response.data);
+      } else {
+        console.error('No token found in localStorage');
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error saving resume:', error);
     }
   };
 
   if (!localStorage.getItem('token')) {
-    // Redirect to login or display an error message
-    return <Navigate to="/login" />;
+    navigate('/login');
+    return null; // or render a loading state
   }
 
   return (
@@ -248,6 +274,7 @@ const Template = () => {
           {resumeData.languages}
         </p>
       </div>
+      <button onClick={handleView}>View Resume</button>
       <button
         onClick={handleSave}
         className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"

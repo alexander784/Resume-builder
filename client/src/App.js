@@ -5,10 +5,11 @@ import Hero from './components/Hero';
 import Resume from './Pages/Resume';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import ResumeDetails from './Pages/ResumeDetails';
+// import ResumeDetails from './Pages/ResumeDetails';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import Template from './templates/Template';
+import ViewResume from './Pages/ViewResume';
 
 function App() {
 
@@ -32,10 +33,11 @@ function App() {
        
        <Routes>
         <Route path='/' element={<Hero />}/>
-        <Route path="/Resume" element={ <Resume />}/>
+        {/* <Route path="/Resume" element={ <Resume />}/> */}
         <Route path='/Signup' element={ <Signup />}/>
         <Route path='/Login' element={ <Login setUsername={setUsername} />} />
-        <Route path='/ResumeDetails' element={ <ResumeDetails /> }/>
+        <Route path='/ViewResume' element={<ViewResume />}/>
+        {/* <Route path='/ResumeDetails' element={ <ResumeDetails /> }/> */}
         <Route path='/template' element={localStorage.getItem('access_token') ? <Template /> : <Navigate to='/login' />} />
         {/* <Route path='/Template' element={ <Template />}/> */}
        </Routes >

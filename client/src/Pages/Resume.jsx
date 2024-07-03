@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import ResumeDetails from './ResumeDetails'; // Import ResumeDetails component
+// import ResumeDetails from './ResumeDetails'; // Import ResumeDetails component
 
 const Resume = () => {
   const navigate = useNavigate();
