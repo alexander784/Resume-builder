@@ -30,6 +30,10 @@ const ViewResume = () => {
             ...resume,
             experience: resume.experience,
             education: resume.education,
+            skills: resume.skills,
+            certificates: resume.certificates,
+            projects: resume.projects,
+            languages: resume.languages,
           });
         } else {
           console.error('No resume found.');

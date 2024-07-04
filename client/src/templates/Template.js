@@ -63,6 +63,7 @@ const Template = () => {
   const handleChange = (field, value) => {
     setResumeData(prevData => ({ ...prevData, [field]: value }));
   };
+  <hr/>
 
   const handleExperienceChange = (index, field, value) => {
     const newExperience = resumeData.experience.map((exp, i) =>
@@ -126,7 +127,7 @@ const Template = () => {
 
   if (!localStorage.getItem('token')) {
     navigate('/login');
-    return null; // or render a loading state
+    return null;
   }
 
   return (
