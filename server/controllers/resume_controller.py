@@ -81,7 +81,7 @@ class ResumeResource(Resource):
         if not user:
             return jsonify({"message": "User not found"}), 404
         
-        resumes = Resume.query.all()
+        resumes = Resume.query.filter_by(user_id=user.id).all()
 
         for resume in resumes:
             resume.experience = json.loads(resume.experience)
