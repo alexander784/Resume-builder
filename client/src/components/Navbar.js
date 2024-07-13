@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { Link, useNavigate } from 'react-router-dom'; 
 
 const Navbar = ({ username, onLogout }) => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const [showDropdown, setShowDropdown] = useState(false);
 
   const handleHomeClick = () => {
-    navigate('/'); // Use navigate to navigate programmatically
+    navigate('/'); 
   };
 
   const toggleDropdown = () => {
@@ -15,7 +15,7 @@ const Navbar = ({ username, onLogout }) => {
   };
 
   const handleLogout = () => {
-    onLogout(); // Call the logout function passed from props
+    onLogout(); 
   };
 
   return (

@@ -29,6 +29,7 @@ const Template = () => {
     profileImage: '',
   });
 
+  const [editMode, setEditMode] = useState(false); // State to manage edit mode
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -107,7 +108,6 @@ const Template = () => {
       if (token) {
         const dataToSave = {
           ...resumeData,
-          // COnvert exp and education to JSON Object
           experience: JSON.stringify(resumeData.experience),
           education: JSON.stringify(resumeData.education),
         };
@@ -126,12 +126,40 @@ const Template = () => {
     }
   };
 
+  const toggleEditMode = () => {
+    setEditMode(prev => !prev);
+  };
+
   if (!localStorage.getItem('token')) {
     navigate('/login');
     return null;
   }
 
   return (
+    <>
+    <div className="flex justify-between mt-4 bg-gray-600">
+        <button onClick={handleView} className="mr-4">
+          View Resume
+        </button>
+        {editMode ? (
+          <button
+            onClick={() => {
+              setEditMode(false);
+              handleSave();
+            }}
+            className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+          >
+            Save
+          </button>
+        ) : (
+          <button
+            onClick={() => setEditMode(true)}
+            className="bg-green-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-green-600 transition duration-300"
+          >
+            Edit
+          </button>
+        )}
+      </div>
     <div className="max-w-3xl mx-auto p-12 bg-gray-200 shadow-xl">
       <div className="flex">
         <div className="w-1/3 p-4 bg-gray-500">
@@ -150,7 +178,7 @@ const Template = () => {
             />
             <h1
               className="text-4xl font-bold text-center"
-              contentEditable
+              contentEditable={editMode}
               suppressContentEditableWarning
               onBlur={(e) => handleChange('name', e.target.innerText)}
             >
@@ -163,21 +191,21 @@ const Template = () => {
               <div key={index} className="mb-4">
                 <h3
                   className="font-bold"
-                  contentEditable
+                  contentEditable={editMode}
                   suppressContentEditableWarning
                   onBlur={(e) => handleEducationChange(index, 'school', e.target.innerText)}
                 >
                   {edu.school}
                 </h3>
                 <p
-                  contentEditable
+                  contentEditable={editMode}
                   suppressContentEditableWarning
                   onBlur={(e) => handleEducationChange(index, 'degree', e.target.innerText)}
                 >
                   {edu.degree}
                 </p>
                 <p
-                  contentEditable
+                  contentEditable={editMode}
                   suppressContentEditableWarning
                   onBlur={(e) => handleEducationChange(index, 'duration', e.target.innerText)}
                 >
@@ -190,7 +218,7 @@ const Template = () => {
             <h2 className="text-2xl font-bold mb-2">Skills</h2>
             <p
               className="p-2 border"
-              contentEditable
+              contentEditable={editMode}
               suppressContentEditableWarning
               onBlur={(e) => handleChange('skills', e.target.innerText)}
             >
@@ -201,7 +229,7 @@ const Template = () => {
             <h2 className="text-2xl font-bold mb-2">Certificates</h2>
             <p
               className="p-2 border"
-              contentEditable
+              contentEditable={editMode}
               suppressContentEditableWarning
               onBlur={(e) => handleChange('certificates', e.target.innerText)}
             >
@@ -214,7 +242,7 @@ const Template = () => {
             <h2 className="text-2xl font-bold mb-2">About Me</h2>
             <p
               className="p-2 border"
-              contentEditable
+              contentEditable={editMode}
               suppressContentEditableWarning
               onBlur={(e) => handleChange('aboutMe', e.target.innerText)}
             >
@@ -227,28 +255,28 @@ const Template = () => {
               <div key={index} className="mb-4">
                 <h3
                   className="font-bold"
-                  contentEditable
+                  contentEditable={editMode}
                   suppressContentEditableWarning
                   onBlur={(e) => handleExperienceChange(index, 'company', e.target.innerText)}
                 >
                   {exp.company}
                 </h3>
                 <p
-                  contentEditable
+                  contentEditable={editMode}
                   suppressContentEditableWarning
                   onBlur={(e) => handleExperienceChange(index, 'position', e.target.innerText)}
                 >
                   {exp.position}
                 </p>
                 <p
-                  contentEditable
+                  contentEditable={editMode}
                   suppressContentEditableWarning
                   onBlur={(e) => handleExperienceChange(index, 'duration', e.target.innerText)}
                 >
                   {exp.duration}
                 </p>
                 <p
-                  contentEditable
+                  contentEditable={editMode}
                   suppressContentEditableWarning
                   onBlur={(e) => handleExperienceChange(index, 'description', e.target.innerText)}
                 >
@@ -261,7 +289,7 @@ const Template = () => {
             <h2 className="text-2xl font-bold mb-2">Projects</h2>
             <p
               className="p-2 border"
-              contentEditable
+              contentEditable={editMode}
               suppressContentEditableWarning
               onBlur={(e) => handleChange('projects', e.target.innerText)}
             >
@@ -272,26 +300,19 @@ const Template = () => {
             <h2 className="text-2xl font-bold mb-2">Languages</h2>
             <p
               className="p-2 border"
-              contentEditable
+              contentEditable={editMode}
               suppressContentEditableWarning
               onBlur={(e) => handleChange('languages', e.target.innerText)}
             >
               {resumeData.languages}
             </p>
           </div>
-          
         </div>
       </div>
-      <button onClick={handleView} className="mr-4">
-            View Resume
-          </button>
-          <button
-            onClick={handleSave}
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
-          >
-            Save
-          </button>
+      
     </div>
+    </>
+
   );
 };
 
