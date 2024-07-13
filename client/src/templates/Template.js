@@ -133,7 +133,18 @@ const Template = () => {
     setEditMode(prev => !prev);
   };
 
-  
+  // COnvert the resume into a pdf download
+  const handleDownloadPDF = async () => {
+    const input = resumeRef.current;
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('resume.pdf');
+  };
 
   if (!localStorage.getItem('token')) {
     navigate('/login');
