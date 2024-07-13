@@ -19,14 +19,14 @@ const Navbar = ({ username, onLogout }) => {
   };
 
   return (
-    <nav className="bg-green-800 p-4">
+    <nav className="bg-white-400 p-4">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <span
-            className="text-white text-xl font-bold cursor-pointer"
+            className="text-black text-xl font-bold cursor-pointer"
             onClick={handleHomeClick}
           >
-            Ralphy
+            Ralphy Resumes
           </span>
         </div>
         <div>
@@ -34,9 +34,9 @@ const Navbar = ({ username, onLogout }) => {
             <div className="relative">
               <button
                 onClick={toggleDropdown}
-                className="text-white text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-gray-800 transition duration-300 focus:outline-none"
+                className="text-black text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-gray-800 transition duration-300 focus:outline-none"
               >
-                {username} ▼
+                {username} 
               </button>
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-48 bg-gray-400 border rounded-lg shadow-lg">
@@ -56,7 +56,7 @@ const Navbar = ({ username, onLogout }) => {
             <div>
               <Link
                 to="/login"
-                className="text-white text-sm px-4 py-2 border border-white rounded hover:bg-white hover:text-gray-800 transition duration-300"
+                className="text-black text-sm px-4 py-2 border border-black rounded hover:text-gray-800 transition duration-300"
               >
                 Login
               </Link>

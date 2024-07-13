@@ -17,10 +17,10 @@ const Hero = () => {
   };
 
   return (
-    <section className="hero min-h-screen bg-gray-800 text-white flex items-center">
+    <section className="hero min-h-screen bg--white-400 text-black flex items-center">
       <div className="container mx-auto">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight">Welcome to Ralphy Resume</h1>
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight">Welcome to Ralphy Resumes</h1>
           <p className="text-lg mt-4">Build your classic Resume in seconds.</p>
           <img 
             src={resume}
