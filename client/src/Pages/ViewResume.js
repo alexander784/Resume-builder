@@ -51,7 +51,7 @@ const ViewResume = () => {
   }
 
   return (
-    <div className="text-center max-w-4xl mx-auto p-4 bg-white shadow-lg">
+    <div className="text-center max-w-2xl mx-auto p-4 bg-gray-200 shadow-xl justify-center">
       <div className="flex justify-between items-center mb-6">
         <div className="bg-yellow-300">
           <h1 className="text-4xl font-bold">{resumeData.name}</h1>
@@ -90,10 +90,12 @@ const ViewResume = () => {
         <h2 className="text-2xl font-bold mb-2">Skills</h2>
         <p className="w-full p-2 border">{resumeData.skills}</p>
       </div>
+      <hr/>
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-2">Certificates</h2>
         <p className="w-full p-2 border">{resumeData.certificates}</p>
       </div>
+      <hr/>
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-2">Projects</h2>
         <p className="w-full p-2 border">{resumeData.projects}</p>

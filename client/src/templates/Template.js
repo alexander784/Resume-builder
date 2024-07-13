@@ -107,6 +107,7 @@ const Template = () => {
       if (token) {
         const dataToSave = {
           ...resumeData,
+          // COnvert exp and education to JSON Object
           experience: JSON.stringify(resumeData.experience),
           education: JSON.stringify(resumeData.education),
         };

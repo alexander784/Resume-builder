@@ -1,21 +1,20 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import resume from "../assets/resume.png";
-import Template from '../templates/Template';
-import ViewResume from '../Pages/ViewResume';
 
 const Hero = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
     const token = localStorage.getItem('token');
+    // console.log('Token:', token);
     if (token) {
+      
       navigate('/template');
     } else {
-      navigate('/template');
+      navigate('/login');
     }
   };
-  
 
   return (
     <section className="hero min-h-screen bg-gray-800 text-white flex items-center">
@@ -29,11 +28,9 @@ const Hero = () => {
             onClick={handleGetStarted}
             className="cursor-pointer mx-auto mt-4 w-32 h-32 object-cover rounded-lg"/>
         </div>
-       
       </div>
     </section>
   );
 };
 
 export default Hero;
-
