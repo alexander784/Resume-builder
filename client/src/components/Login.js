@@ -34,6 +34,7 @@ const Login = ({ setUsername }) => {
           console.log(data);
           if (data) {
             localStorage.setItem('token', data.tokens.access); 
+            localStorage.setItem('username', data.user.username); 
             setUsername(data.user.username);
             navigate('/template'); 
           }
