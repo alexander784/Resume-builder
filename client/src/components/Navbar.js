@@ -30,7 +30,8 @@ const Navbar = ({ username, onLogout }) => {
           </span>
         </div>
         <div>
-          {username ? (
+          {
+          username ? (
             <div className="relative">
               <button
                 onClick={toggleDropdown}
@@ -38,7 +39,8 @@ const Navbar = ({ username, onLogout }) => {
               >
                 {username} 
               </button>
-              {showDropdown && (
+              {
+              showDropdown && (
                 <div className="absolute right-0 mt-2 w-48 bg-gray-400 border rounded-lg shadow-lg">
                   <Link to="/profile" className="block px-4 py-2 text-gray-800">
                     View profile

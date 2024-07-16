@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Login = ({ setUsername }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate(); 
+  
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -33,6 +34,7 @@ const Login = ({ setUsername }) => {
         .then((data) => {
           console.log(data);
           if (data) {
+            // store tokens in local Storage
             localStorage.setItem('token', data.tokens.access); 
             localStorage.setItem('username', data.user.username); 
             setUsername(data.user.username);
@@ -50,7 +52,11 @@ const Login = ({ setUsername }) => {
     <div className='min-h-screen flex items-center justify-center bg-gray-100'>
       <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'>
         <h2 className='text-2xl font-bold mb-6 text-center'>Login</h2>
-        {error && <div className='mb-4 text-red-500'>{error}</div>}
+        {
+        error && 
+        <div className='mb-4 text-red-500'>{error}
+        </div>
+        }
         <form onSubmit={formik.handleSubmit} className='space-y-4'>
           <div>
             <label htmlFor='username' className='block text-gray-700'>Username</label>

@@ -154,9 +154,6 @@ const Template = () => {
   return (
     <>
       <div className="flex justify-between mt-4 bg-gray-600">
-        <button onClick={handleView} className="mr-4">
-          View Resume
-        </button>
         {editMode ? (
           <button
             onClick={() => {
@@ -183,15 +180,18 @@ const Template = () => {
         </button>
       </div>
       <div ref={resumeRef} className="max-w-3xl mx-auto p-12 bg-gray-200 shadow-xl">
+        <h2>Template 1</h2>
         <div className="flex">
           <div className="w-1/3 p-4 bg-gray-500">
             <div className="flex flex-col items-center mb-6">
+
               <img
                 src={resumeData.profileImage || ''}
                 alt="Profile"
                 className="w-32 h-32 object-cover rounded-full shadow-lg cursor-pointer mb-4"
                 onClick={() => fileInputRef.current.click()}
               />
+              
               <input
                 type="file"
                 ref={fileInputRef}
