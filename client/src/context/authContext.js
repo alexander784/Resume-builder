@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { Children, useContext, useReducer } from 'react';
 
 
 const AuthContext = React.createContext()
@@ -44,5 +44,18 @@ const AuthProvider = () => {
         }
     };
     const [authState, dispatchForAUthState] = useReducer(authReducer, initialAuthState);
-    
-}
+
+    return (
+        <AuthContext.Provider value={{authState, dispatchForAUthState}}>
+            {Children}
+        </AuthContext.Provider>
+    );
+
+};
+
+const useGlobalAuthContext = () => {
+    return
+    useContext(AuthContext);
+};
+
+export { AuthProvider, useGlobalAuthContext };
