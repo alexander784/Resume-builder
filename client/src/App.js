@@ -14,6 +14,8 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    
+    // Set username empty String
     setUsername("");
   };
 

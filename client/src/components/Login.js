@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGlobalAuthContext } from '../context/authContext';
+
 
 const Login = ({ setUsername }) => {
+  const { dispatchForAuthState } = useGlobalAuthContext();
+
   const [error, setError] = useState(null);
   const navigate = useNavigate(); 
   
@@ -14,6 +18,9 @@ const Login = ({ setUsername }) => {
     },
     onSubmit: (values, { resetForm }) => {
       console.log(values);
+      dispatchForAuthState({
+        type: "FETCH_REQUEST"
+      });
 
       fetch('http://127.0.0.1:5000/auth/login', {
         method: 'POST',
@@ -37,6 +44,7 @@ const Login = ({ setUsername }) => {
             // store tokens in local Storage
             localStorage.setItem('token', data.tokens.access); 
             localStorage.setItem('username', data.user.username); 
+            // Also store the current user
             setUsername(data.user.username);
             navigate('/template'); 
           }
@@ -44,6 +52,10 @@ const Login = ({ setUsername }) => {
         .catch((err) => {
           console.log('Error in logging in user', err);
           setError('Login failed. Please check your credentials and try again.');
+
+          dispatchForAuthState({
+            type:"FETCH_FAILURE",payload: err
+          });
         });
     },
   });
