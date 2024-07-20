@@ -22,7 +22,8 @@ const Login = ({ setUsername }) => {
         type: "FETCH_REQUEST"
       });
 
-      fetch('http://127.0.0.1:5000/auth/login', {
+      fetch('https://resume-builder-lrvo.onrender.com/auth/login', {
+        
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

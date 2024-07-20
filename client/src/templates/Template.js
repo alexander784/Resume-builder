@@ -3,9 +3,15 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { useGlobalTemplateContext } from './templateContext';
 
 const Template = () => {
+
+  const { TemplateState, dispatchForTemplate} = useGlobalTemplateContext();
+
   const [resumeData, setResumeData] = useState({
+
+
     name: 'Your Name',
     profile: 'A brief profile summary.',
     aboutMe: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
@@ -31,39 +37,47 @@ const Template = () => {
     profileImage: '',
   });
 
-  const [editMode, setEditMode] = useState(false); // State to manage edit mode
+  const [editMode, setEditMode] = useState(false);
+
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
-  const resumeRef = useRef(null); // Ref for the resume container
+  const resumeRef = useRef(null); 
 
-  useEffect(() => {
-    const fetchResumeData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (token) {
-          const response = await axios.get('http://127.0.0.1:5000/resume/resume', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const resume = response.data.resumes;
-          if (resume) {
-            setResumeData({
-              ...resume,
-              experience: JSON.parse(resume.experience),
-              education: JSON.parse(resume.education),
-            });
-          } else {
-            console.error('No resume found.');
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching resume data:', error);
-      }
-    };
+//   const fetchResumeData = () => {
+//   fetch("http://127.0.0.1:5000/resume/resume", {
+//     method:"GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json",
+//       Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+//     },
 
-    fetchResumeData();
-  }, []);
+//   })
+//   .then((response) => {
+//     if (response.ok) {
+//       return response.json();
+//     }
+//   })
+//   .then((data) => {
+//     console.log(data);
+//     if(data.Template) {
+
+//       setTimeout(() => {
+//         dispatchForTemplate({ type:
+//           "FETCH_SUCCESS",
+//           payload:data.Template
+//         });
+//       }, 1500);
+//     }
+//   })
+
+//   .catch((err) => {
+//     console.log("Error in Fetch templates", err);
+//     dispatchForTemplate({ type:
+//       "FETCH_FAILURE", payload: err
+//     });
+//   })
+// }
 
   const handleChange = (field, value) => {
     setResumeData(prevData => ({ ...prevData, [field]: value }));
@@ -105,29 +119,29 @@ const Template = () => {
     }
   };
 
-  const handleSave = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const dataToSave = {
-          ...resumeData,
-          experience: JSON.stringify(resumeData.experience),
-          education: JSON.stringify(resumeData.education),
-        };
-        const response = await axios.post('http://127.0.0.1:5000/resume/resume', dataToSave, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log('Resume saved successfully:', response.data);
-      } else {
-        console.error('No token found in localStorage');
-        navigate('/login');
-      }
-    } catch (error) {
-      console.error('Error saving resume:', error);
-    }
-  };
+  // const handleSave = async () => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       const dataToSave = {
+  //         ...resumeData,
+  //         experience: JSON.stringify(resumeData.experience),
+  //         education: JSON.stringify(resumeData.education),
+  //       };
+  //       const response = await axios.post('http://127.0.0.1:5000/resume/resume', dataToSave, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+  //       console.log('Resume saved successfully:', response.data);
+  //     } else {
+  //       console.error('No token found in localStorage');
+  //       navigate('/login');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error saving resume:', error);
+  //   }
+  // };
 
   const toggleEditMode = () => {
     setEditMode(prev => !prev);
@@ -151,6 +165,7 @@ const Template = () => {
     return null;
   }
 
+
   return (
     <>
       <div className="flex justify-between mt-4 bg-gray-600">
@@ -158,7 +173,7 @@ const Template = () => {
           <button
             onClick={() => {
               setEditMode(false);
-              handleSave();
+              // handleSave();
             }}
             className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
