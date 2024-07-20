@@ -14,7 +14,20 @@ const Signup = () => {
       confirm_password: "",
     },
 
-    
+    validationSchema:Yup.object({
+      full_name:Yup.string().required("Full name required"),
+      username: Yup.string().required("Username required"),
+      email: Yup.string()
+         .required("Email required")
+         .email("Invalid email format"),
+      password:Yup.string()
+         .required("Password required")
+         .min(8, "Password must be atleast 8 characters")
+         .max(16, "Password must exceeed 16 characters"),
+      confirm_password:Yup.string()
+      .required("Confirm Password required")
+      .oneOf([Yup.ref("password")], "Passwordds must match"),
+    }),
 
     onSubmit: (values, { resetForm }) => {
       console.log(values);
