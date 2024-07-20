@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from sqlalchemy.orm import validates
 import json
 from werkzeug.security import check_password_hash,generate_password_hash
 
@@ -25,6 +26,19 @@ class User(db.Model):
         self.password = generate_password_hash(password)
     def check_password(self, password):
         return check_password_hash(self.password, password)
+    
+
+    # validations
+    @validates("username")
+    def validate_username(self, key, username):
+        if not username:
+            raise ValueError("Username required")
+        else:
+            if User.query.filter_by(username=username).first():
+                raise ValueError("Username already exists")
+            
+            return username
+    
 
 
 

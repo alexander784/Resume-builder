@@ -1,11 +1,15 @@
 from flask import Flask
 from flask_migrate import Migrate
+from dotenv import load_dotenv
 import os
 from os import environ
 from flask_marshmallow import Marshmallow
 from models import db
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+
+
+load_dotenv()
 
 app = Flask(__name__)
 jwt = JWTManager(app)
