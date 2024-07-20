@@ -38,6 +38,23 @@ class User(db.Model):
                 raise ValueError("Username already exists")
             
             return username
+        
+    @validates("email")
+    def validate_email(self, key, email):
+        if not email:
+            raise ValueError("Email required")
+        else:
+            if User.query.filter_by(email=email).first():
+                raise ValueError("Email already exists")
+            else:
+                import re 
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                regex = re.compile(pattern)
+
+                if not regex.fullmatch(email):
+                    raise ValueError("Invalid email")
+                return email
+
     
 
 
