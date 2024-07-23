@@ -4,6 +4,7 @@ attrs==23.2.0
 blinker==1.8.2
 certifi==2024.7.4
 click==8.1.7
+python-dotenv
 distlib==0.3.8
 filelock==3.15.4
 Flask==3.0.3
