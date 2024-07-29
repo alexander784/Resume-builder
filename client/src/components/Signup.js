@@ -1,6 +1,8 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import * as Yup from "yup";
+
 
 const Signup = () => {
   const [error, setError] = useState(null);
@@ -14,20 +16,21 @@ const Signup = () => {
       confirm_password: "",
     },
 
-    validationSchema:Yup.object({
-      full_name:Yup.string().required("Full name required"),
-      username: Yup.string().required("Username required"),
-      email: Yup.string()
-         .required("Email required")
-         .email("Invalid email format"),
-      password:Yup.string()
-         .required("Password required")
-         .min(8, "Password must be atleast 8 characters")
-         .max(16, "Password must exceeed 16 characters"),
-      confirm_password:Yup.string()
-      .required("Confirm Password required")
-      .oneOf([Yup.ref("password")], "Passwordds must match"),
-    }),
+    // validationSchema:Yup.object({
+    //   // full_name:Yup.string().required("Full name required"),
+    //   username: Yup.string().required("Username required"),
+    //   email: Yup.string()
+    //      .required("Email required")
+    //      .email("Invalid email format"),
+    //   password:Yup.string()
+    //      .required("Password required")
+    //      .min(8, "Password must be atleast 8 characters")
+    //      .max(16, "Password must exceeed 16 characters"),
+    //   confirm_password:Yup.string()
+    //   .required("Confirm Password required")
+    //   .oneOf([Yup.ref("password")], "Passwordds must match"),
+    // }),
+
 
     onSubmit: (values, { resetForm }) => {
       console.log(values);
@@ -40,6 +43,7 @@ const Signup = () => {
         },
         body: JSON.stringify(values),
       })
+      
       // Get response
         .then((response) => {
           if (response.ok) {
@@ -68,7 +72,8 @@ const Signup = () => {
     <div className='min-h-screen flex items-center justify-center bg-gray-100'>
       <div className='bg-white p-8 rounded-lg shadow-md w-full max-w-md'>
         <h2 className='text-2xl font-bold mb-6 text-center'>Sign Up</h2>
-        {error && <div className='mb-4 text-red-500'>{error}</div>}
+        {
+          error && <div className='mb-4 text-red-500'>{error}</div>}
         <form onSubmit={formik.handleSubmit} className='space-y-4'>
           <div>
             <label htmlFor='username' className='block text-gray-700'>Username</label>
