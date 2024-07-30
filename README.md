@@ -1,18 +1,18 @@
 ## Resume Builder
 
-<p> A web app for creating resumes.Built with React for the frontend and Flask backend, this app allow user to create Account, edit and download resumes. </p>
+<p> A web app for creating resumes.Built with React for the frontend and Flask backend, this app allow user to  edit, preview your resume and download the  resume. </p>
 
 ## Features
 
-<p> User Authentication: Secure login and rewgistration using JWT.</p>
-<p>Resume Editor: Create and customize resumes with sections like Ediucation Experience,Skills</p>
+<p> User Authentication: Secure login and registration using JWT.</p>
+<p>Resume Editor: Create and customize resumes with sections like Education Experience,Skills</p>
 <p>Preview and Download: Preview resumes in real time and dowbload them as PDF</p>
 
-# Demo
+# Demo:
 
 ## Getting Started with Rseume Builder
 
-1. Clone the Repo:
+1. Clone the Repo: <br>
 `git clone https://github.com/yourusername/resume-builder.git`
 `cd resume-builder`
 
@@ -20,38 +20,40 @@
 
    <p> Navigate to the server directory and create your virtual env</p>
 
-    `cd server`
+    `cd server` <br>
     `pipenv install && pipenv shell`
 
     <p>Install the required packages: </p>
+
     `pip install -r requirements.txt`
 
     <p>Setup your db:</p>
-    `flask db init`
-    `flask db migrate`
-    `flask db upgrade`
+    `flask db init` <br>
+    `flask db migrate`<br>
+    `flask db upgrade`<br>
 
 
 3. ## Frontend Setup:
 
  <p>Navigate to the client DIR:</p>
-  `cd client`
-  `npm install`
+
+  `cd client` <br>
+  `npm install`<br>
 
 
   ## Running the App
 
   1. Start the backend server
 
-    `cd server`
-    `flask run`
+        cd server
+        flask run
 
   2. Start the frontend server
    
     `cd client`
     `npm start`
 
-  3. Access your App: Open your browser and go to 
+  3. Access your App: Open your browser and go to: <br>
     `http://localhost:3000/` 
 
 
