@@ -27,7 +27,7 @@ ma = Marshmallow(app)
 migrate = Migrate(app,db)
 
 
-CORS(app,)
+CORS(app)
 
 
 

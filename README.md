@@ -9,6 +9,7 @@
 <p>Preview and Download: Preview resumes in real time and dowbload them as PDF</p>
 
 # Demo:
+  https://drive.google.com/file/d/1rgA6pcl4AD7HhorDwNEGrNK5riqxycDw/view?usp=sharing
 
 ## Getting Started with Rseume Builder
 
@@ -28,7 +29,7 @@
     `pip install -r requirements.txt`
 
     <p>Setup your db:</p>
-    `flask db init` <br>
+    flask db init <br>
     `flask db migrate`<br>
     `flask db upgrade`<br>
 
@@ -45,8 +46,8 @@
 
   1. Start the backend server
 
-        cd server
-        flask run
+        cd server 
+        flask run 
 
   2. Start the frontend server
    
