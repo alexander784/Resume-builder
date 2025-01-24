@@ -17,7 +17,7 @@ const Login = ({ setUsername }) => {
       password: '',
     },
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      // console.log(values);
       dispatchForAuthState({
         type: "FETCH_REQUEST"
       });

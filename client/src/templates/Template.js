@@ -169,7 +169,8 @@ const Template = () => {
   return (
     <>
       <div className="flex justify-between mt-4 bg-gray-600">
-        {editMode ? (
+        {
+          editMode ? (
           <button
             onClick={() => {
               setEditMode(false);

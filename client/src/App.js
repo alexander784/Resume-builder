@@ -7,6 +7,8 @@ import Login from './components/Login';
 import { useState } from 'react';
 import Template from './templates/Template';
 import ViewResume from './Pages/ViewResume';
+import Services from './Pages/Services';
+import Footer from './Pages/Footer';
 
 function App() {
   const [username, setUsername] = useState(localStorage.getItem('username') || '');
@@ -21,16 +23,21 @@ function App() {
 
   return (
     <>
+
       <Router>
         <Navbar username={username} onLogout={handleLogout} />
         <Routes>
           <Route path='/' element={<Hero />} />
+
           <Route path='/Signup' element={<Signup />} />
           <Route path='/Login' element={<Login setUsername={setUsername} />} />
           <Route path='/ViewResume' element={<ViewResume />} />
           <Route path='/template' element={localStorage.getItem('access_token') ? <Template /> : <Navigate to='/login' />} />
         </Routes>
       </Router>
+{/* <Services /> */}
+{/* <Footer /> */}
+
     </>
   );
 }
